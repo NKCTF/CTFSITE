@@ -174,3 +174,8 @@ user/config.py
 
 # frontendcode
 /frontend
+
+# collect out file
+/static
+# nginx config file in server
+uwsgi_params
