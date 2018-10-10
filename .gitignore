@@ -172,3 +172,5 @@ ecosystem.config.js
 # secrect_key
 user/config.py
 
+# frontendcode
+/frontend

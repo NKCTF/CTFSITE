@@ -77,7 +77,7 @@ TEMPLATES = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend"),
+    os.path.join(BASE_DIR, "frontend/static"),
 ]
 #STATIC_URL = '/frontend/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
