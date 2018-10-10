@@ -1,0 +1,11 @@
+@media (min-width: 850px) and (orientation: landscape) {
+  .nav-logo .logo-image {
+    max-width: 200px;
+    min-width: 100px;
+    flex: 1; } }
+
+.nav-logo .logo-image {
+  height: 100px;
+  background-size: contain !important;
+  cursor: pointer;
+  margin: auto; }
