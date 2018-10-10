@@ -1,0 +1,58 @@
+
+.tile.is-ancestor[data-v-15e3a680] {
+  width: 100%;
+}
+.challenges[data-v-15e3a680] {
+  padding-bottom: 2rem;
+}
+
+
+
+
+
+@media (min-width: 850px) and (orientation: landscape) {
+.box[data-v-10d9df09] {
+    max-width: 50%;
+}
+}
+.box[data-v-10d9df09] {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  flex: 0 1 100%;
+  width: 100%;
+}
+
+
+.profile[data-v-3d0b1749] {
+  padding-bottom: 2rem;
+}
+
+
+@media (min-width: 850px) and (orientation: landscape) {
+.box[data-v-8f8a1d9a] {
+    max-width: 50%;
+}
+}
+.box[data-v-8f8a1d9a] {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  flex: 0 1 100%;
+  width: 100%;
+}
+
+
+
+
+.scoreboard[data-v-494c5fa4] {
+  justify-content: unset !important;
+}
+
+
+.search[data-v-4ad41bb8] {
+  justify-content: unset !important;
+}
+
+
+
