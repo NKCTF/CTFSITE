@@ -13,7 +13,7 @@ from urllib.parse import quote as url_quote
 
 from .models import User
 # TODO: 导入用于导入 secret_key 的环境变量
-#from .config import *
+from .config import *
 from os import environ as environ_var
 
 # TODO: 导入检查密码和用户名的包
