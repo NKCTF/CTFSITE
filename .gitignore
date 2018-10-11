@@ -170,7 +170,7 @@ venv.bak/
 ecosystem.config.js
 
 # secrect_key
-user/config.py
+backend/user/config.py
 
 # frontendcode
 /frontend
