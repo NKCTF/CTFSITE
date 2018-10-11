@@ -25,12 +25,11 @@ class Question(models.Model):
     solve_by = models.ManyToManyField(User, through="Solve")
     flag = models.CharField(max_length=32)
 
-    def set_flag(self, plain_text_flag):
-        self.flag = make_password(plain_text_flag)
+    def set_flag(self, text_flag):
+        self.flag = text_flag
 
-    def check_flag(self, plain_text_flag):
-        cipher_text_flag = self.flag
-        return check_password(plain_text_flag, cipher_text_flag)
+    def check_flag(self, text_flag):
+        return self.flag == text_flag
 
 
 class Solve(models.Model):
