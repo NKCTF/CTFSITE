@@ -19,7 +19,7 @@ class Question(models.Model):
     question_tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     question_name = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=256)
-    link = models.CharField(max_length=256, null=True)
+    link = models.CharField(max_length=256, null=True, blank=True)
 
     score = models.IntegerField(default=200)
     solve_by = models.ManyToManyField(User, through="Solve")
