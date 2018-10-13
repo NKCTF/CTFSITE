@@ -1,7 +1,7 @@
 
-from question.models import Tag, Question, Solve
-from user.models import User, Career, Team
-from message.models import Mail, JoinRequest
+from backend.question.models import Tag, Question, Solve
+from backend.user.models import User, Career, Team
+from backend.message.models import Mail, JoinRequest
 from datetime import datetime
 
 
