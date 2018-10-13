@@ -174,7 +174,7 @@ backend/user/config.py
 ctfsite/config.py
 
 # migrations file
-*/migrations/
+migrations/
 
 # frontendcode
 /frontend
