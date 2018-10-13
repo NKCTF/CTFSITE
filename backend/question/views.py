@@ -131,7 +131,6 @@ class CheckFlag(View):
         self.q_id = request.POST.get("question_id")
         self.q_flag = request.POST.get("flag")
         self.crt_user = request.user
-        print(self.q_id, self.q_flag)
 
         self.code = (self.check() if self.q_flag is not None else 3)\
             if self.q_id is not None else 2

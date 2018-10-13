@@ -98,10 +98,8 @@ class AuthLogin(View):
             "redirect_uri": redirect,
             "state": state, "code": code,
         }
-        print("POST_DATA to github:", post_data)
         data = send_post(f"{self.token_host['github']}",
                          json=post_data, headers={"accept": "application/json"}).json()
-        print("Call back from github:", data)
         self.access_token = data.get("access_token")
         self.token_type = data.get("token_type")
         self.error = data.get("error")
@@ -118,7 +116,6 @@ class AuthLogin(View):
         self.auth_id = data.get("id")
         self.username = data.get("login")
         self.email = data.get("email") or "not_open@github.com"
-        print(self.email)
 
     def get(self, request):
         self.message_type = request.GET.get('type')

@@ -67,7 +67,6 @@ class TeamInformation(View):
         self.t_obj = self.crt_user.belong
         if self.t_obj is None:
             return 1
-        print(self.t_obj)
         self.data = {
             "team_name": self.t_obj.team_name,
             "team_description": self.t_obj.description,

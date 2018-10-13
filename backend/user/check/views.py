@@ -49,7 +49,6 @@ class Password(View):
             # TODO: searching for username
             self.result["name_similar"] = re.search(self.username, self.password) is not None
         else:
-            print("Username similarity doesn't check.")
             self.result["name_similar"] = False
         # TODO: 如果 result 中的所有值为 False, code = 0, 否则为 1
         return 0 if ([v for v in self.result.values() if v] == []) else 1

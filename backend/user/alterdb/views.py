@@ -38,7 +38,6 @@ class AlterPersonal(View):
         try:
             # self.error = "test error"
             # return 3
-            print(self.target_attr, self.new_value)
             if self.target_attr not in self.allow_attr:
                 return 2
             if self.target_attr == "user_career":
@@ -49,11 +48,9 @@ class AlterPersonal(View):
             return 0
         except Exception as e:
             self.error = str(e)
-            print(e)
             return 3
 
     def get(self, request):
-        print(request.method)
         self.code = 10
         return JsonResponseZh(self.get_ret_dict())
 
@@ -135,7 +132,6 @@ class CreateTeam(View):
         return 0
 
     def get(self, request):
-        print(request.method)
         self.code = 10
         return JsonResponseZh(self.ret_dict[self.code])
 
