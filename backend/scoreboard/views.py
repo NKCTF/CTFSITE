@@ -69,13 +69,17 @@ class TeamScore(View):
             annotate(score=Sum("score"), members=Count("belong")).\
             order_by(F("score").desc())
         # TODO; key 即列表的键，value 即为一个 query 出来的字典
-        self.data = [{"team_name" if k == "belong" else k:
-                     # TODO: 将 belong 属性名替换为 team_name 属性名
-                     (Team.objects.get(id=v).team_name if v is not None else "HAVEN'T JOIN YET.")
-                     # TODO: 将战队的 id 替换成为 name 指示战队名称
-                     if k == "belong" else v for k, v in value.items()}
-                     for key, value in enumerate(self.board) if key < 10]
-                     # TODO: if 条件决定返回数据量小于十个
+        for show_team in self.board:
+            if show_team["belong"] is None:
+                continue
+            # TODO: 将战队的 id 替换成为 name 指示战队名称
+            show_team["team_name"] = Team.objects.get(id=show_team["belong"]).team_name
+            # TODO: 将 belong 属性名替换为 team_name 属性名
+            del show_team["belong"]
+            self.data.append(show_team)
+            # TODO: if 条件决定返回数据量小于十个
+            if len(self.data) >= 10:
+                break
         return 0 if self.data is not [] else 1
 
     def get(self, request):
