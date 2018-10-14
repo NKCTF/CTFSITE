@@ -66,7 +66,7 @@ ROOT_URLCONF = 'ctfsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['frontend'],
+        'DIRS': ['frontend/public'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,7 +80,7 @@ TEMPLATES = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/static"),
+    os.path.join(BASE_DIR, "frontend/public"),
 ]
 #STATIC_URL = '/frontend/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
@@ -98,6 +98,10 @@ DATABASES = {
         "USER": os.environ["ctfsite-mysql-username"],
         "PASSWORD": os.environ["ctfsite-mysql-password"],
         "HOST": "localhost",
+        "OPTIONS": {
+            "init_command": "SET sql_mode = 'STRICT_TRANS_TABLES'",
+            "charset": "utf8",
+        }
     }
 }
 
