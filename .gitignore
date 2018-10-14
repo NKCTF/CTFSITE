@@ -176,9 +176,6 @@ ctfsite/config.py
 # migrations file
 migrations/
 
-# frontendcode
-/frontend
-
 # collect out file
 /static
 # nginx config file in server
@@ -264,7 +261,7 @@ typings/
 .idea
 
 # dist files
-public/
+static/
 
 # magic files
 .editorconfig

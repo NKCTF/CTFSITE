@@ -66,7 +66,7 @@ ROOT_URLCONF = 'ctfsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['frontend/public'],
+        'DIRS': ["frontend"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,9 +80,9 @@ TEMPLATES = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/public"),
+    os.path.join(BASE_DIR, "frontend/static"),
 ]
-#STATIC_URL = '/frontend/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 WSGI_APPLICATION = 'ctfsite.wsgi.application'
