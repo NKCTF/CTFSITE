@@ -10,6 +10,7 @@ export default {
       current: undefined,
       scoreboard: [],
       tableState: STATE_NONE,
+      refreshState: STATE_NONE,
       errorMsg: '',
       STATE_ERROR,
       STATE_PENDING,
@@ -51,6 +52,18 @@ export default {
         }
       });
     },
+    refresh() {
+      this.refreshState = STATE_PENDING;
+      return APIFetch("/scoreboard/refresh/board/").then(data =>{
+        if (data.code === 0) {
+          this.fetch();
+          this.refreshState = STATE_SUCCESS;
+        } else {
+          this.errorMsg = `${data.msg}: ${data.err}`;
+          this.tableState = STATE_ERROR;
+        }
+      })
+    }
   },
 };
 
@@ -65,8 +78,10 @@ export default {
 <template>
 <div :id="$options.name" :class="$options.name">
   <div class="buttons has-addons">
-    <span class="button" :class="{'is-info': current === 0}" @click="navTo(0)">Users</span>
-    <span class="button" :class="{'is-info': current === 1}" @click="navTo(1)">Teams</span>
+    <span class="button" :class="{'is-info': current === 0}" @click="navTo(0)">用户排行榜</span>
+    <span class="button is-dark" :class="{'is-loading': refreshState === STATE_PENDING}"
+          :disabled="refreshState === STATE_PENDING" @click="refresh">刷新排行榜</span>
+    <span class="button" :class="{'is-info': current === 1}" @click="navTo(1)">战队排行榜</span>
   </div>
   <article class="message is-danger" v-if="tableState === STATE_ERROR">
     <div class="message-body">

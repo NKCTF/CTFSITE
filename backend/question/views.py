@@ -31,7 +31,8 @@ class QuestionList(View):
         self.data = [{
             "question_id": question.id,
             "question_name": question.question_name,
-            "score": question.score,
+            "init_score": question.init_score,
+            "current_score": question.get_score(),
             "solved_by": question.solve_by.all().count(),
             "first_solved": getattr(getattr(Solve.objects.filter(which_question=question).order_by("time").first(),
                                             'who_solve',None), 'username', 'NOBODY')
@@ -69,7 +70,7 @@ class QuestionMessage(View):
                 "question_name": self.q_info.question_name,
                 "description": self.q_info.description,
                 "annex_link": self.q_info.link,
-                "question_score": self.q_info.score,
+                "current_score": self.q_info.get_score(),
                 "first_three_solved": [v.who_solve.username for k, v in
                                        enumerate(Solve.objects.filter(which_question=self.q_info)) if k < 3]
             }
@@ -118,11 +119,8 @@ class CheckFlag(View):
         if not self.q_obj.check_flag(self.q_flag):
             return 1
         # TODO: 给当前用户添加 Score 并且建立 Solve 对象
-        self.crt_user.score = self.crt_user.score + self.q_obj.score
-        self.crt_user.save()
         u_s_q = Solve.objects.create(who_solve=self.crt_user,
                                      which_question=self.q_obj)
-        u_s_q.save()
         return 0
 
     def post(self, request):

@@ -71,7 +71,8 @@
         <tr>
           <th> </th>
           <th>题目名称</th>
-          <th>基础分数</th>
+          <th>分数池</th>
+          <th>当前分数</th>
           <th>解出人数</th>
           <th>第一个解出</th>
         </tr>
@@ -82,7 +83,8 @@
           <router-link tag="td" :to="'question/' + question.question_id">
             {{ question.question_name }}
           </router-link>
-          <td>{{ question.score }}</td>
+          <td>{{ question.init_score }}</td>
+          <td>{{ question.current_score }}</td>
           <td>{{ question.solved_by }}</td>
           <td>{{ question.first_solved }}</td>
         </tr>

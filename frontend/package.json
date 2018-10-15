@@ -1,7 +1,9 @@
 {
   "name": "nkctf-frontend",
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "mathjax": "^2.7.5"
+  },
   "description": "NKCTF Project",
   "main": "index.js",
   "scripts": {

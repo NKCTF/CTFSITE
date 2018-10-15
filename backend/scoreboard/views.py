@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse
 from django.views import View
 from backend.user.models import User, Team, Career
+from backend.question.models import Solve
 from django.db.models import F, FloatField, Sum, Count
 
 
@@ -92,3 +93,26 @@ class TeamScore(View):
     def post(self, request):
         self.code = 10
         return JsonResponseZh(self.get_ret_dict())
+
+
+def refresh_board(request):
+    try:
+        user_board = User.objects.all().order_by(F("score").desc())[:10]
+        for user in user_board:
+            score = 0
+            sovle_list = Solve.objects.filter(who_solve=user)
+            for sovle in sovle_list:
+                ranking = sovle.get_ranking()
+                score += sovle.which_question.get_score(rank=ranking)
+            user.score = score
+        return JsonResponseZh({
+            "code": 0,
+            "msg": "刷新成功",
+        })
+    except Exception as e:
+        return JsonResponseZh({
+            "code": 1,
+            "msg": "刷新失败",
+            "error": str(e),
+        })
+    

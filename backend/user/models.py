@@ -22,19 +22,19 @@ class Career(models.Model):
 
 class User(AbstractUser):
     """从 Django 系统定义的抽象基类 AbstractUser 派生出我们自己的类"""
-    auth_id = models.IntegerField(unique=True, null=True)
-    auth_type = models.CharField(max_length=16, null=True)
+    auth_id = models.IntegerField(unique=True, null=True, blank=True)
+    auth_type = models.CharField(max_length=16, null=True, blank=True)
 
     score = models.IntegerField(default=0)
-    qq = models.CharField(max_length=16, null=True)
-    github = models.CharField(max_length=32, null=True)
+    qq = models.CharField(max_length=16, null=True, blank=True)
+    github = models.CharField(max_length=32, null=True, blank=True)
     description = models.CharField(max_length=128, default='Welcome to NanKai CTF')
 
     belong = models.ForeignKey(Team, on_delete=models.SET_NULL,
-                               related_name="work_for", null=True)
-    user_career = models.ForeignKey(Career, on_delete=models.SET_NULL, null=True)
-    join_date = models.DateField(null=True)
-    is_leader = models.BooleanField(default=False, null=True)
+                               related_name="work_for", null=True, blank=True)
+    user_career = models.ForeignKey(Career, on_delete=models.SET_NULL, null=True, blank=True)
+    join_date = models.DateField(null=True, blank=True)
+    is_leader = models.BooleanField(default=False, null=True, blank=True)
 
     def create_team(self, team_name, team_description=None):
         if team_name is None:

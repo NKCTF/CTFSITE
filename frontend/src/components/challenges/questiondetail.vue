@@ -85,7 +85,7 @@
           <div class="content" style="text-align: center">
             <p>
               <strong>{{questionMsg.question_name}}</strong><br>
-              <small>SCORE:</small> <small>{{questionMsg.question_score + 'pt'}}</small>
+              <small>SCORE:</small> <small>{{questionMsg.current_score + 'pt'}}</small>
               <br><br>
               {{questionMsg.description}}
             </p>
