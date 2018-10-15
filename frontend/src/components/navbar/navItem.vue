@@ -33,7 +33,7 @@
 
 <template>
   <div :class="$options.name" class="column">
-    <router-link :to="to">
+    <router-link :to="to" class="is-info">
       <slot></slot>
     </router-link>
   </div>

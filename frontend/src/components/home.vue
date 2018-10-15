@@ -34,6 +34,6 @@ export default {
 
 <template>
 <div :id="$options.name" :class="$options.name">
-  3
+  Loading Fail.
 </div>
 </template>

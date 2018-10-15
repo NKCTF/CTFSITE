@@ -33,14 +33,14 @@ export default {
 
 <template>
 <div :id="$options.name" :class="$options.name">
-  <router-link tag="div" to="challenges/rules" style="padding-bottom: 1rem">
-    <a class="button is-rounded is-info">
+  <div style="padding-bottom: 1rem">
+    <a class="button is-rounded is-info" href="http://ctf.shesl.top:8000/rules.zip">
     <span class="icon">
       <i class="fas fa-info "></i>
     </span>
       <span>分数规则</span>
     </a>
-  </router-link>
+  </div>
   <div class="tile is-ancestor">
     <router-link tag="div" to="challenges/PWN" class="tile is-parent">
       <article class="tile  box is-child has-text-centered">
