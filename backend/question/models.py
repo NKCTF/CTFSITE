@@ -27,7 +27,7 @@ class Question(models.Model):
     # TODO: arg_p 越小，分数极差越大，第一个解出题目的人最终得分越高
     arg_p = models.FloatField(default=0.6)
     solve_by = models.ManyToManyField(User, through="Solve")
-    flag = models.CharField(max_length=32)
+    flag = models.CharField(max_length=128)
 
     def set_flag(self, text_flag):
         self.flag = text_flag
@@ -56,7 +56,7 @@ class Question(models.Model):
 class Solve(models.Model):
     who_solve = models.ForeignKey(User, on_delete=models.CASCADE)
     which_question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    time = models.TimeField(auto_now_add=True, blank=True)
+    time = models.DateTimeField(auto_now_add=True, blank=True)
 
     def get_ranking(self):
         ranking = Solve.objects.filter(which_question=self.which_question,
