@@ -36,7 +36,7 @@ export default {
   <div :id="$options.name" class="columns">
     <nav-item v-if="userInfo.isLogin" to="/scoreboard">ScoreBoard</nav-item>
     <nav-item v-if="userInfo.isLogin" to="/challenges">Challenges</nav-item>
-    <nav-logo to="https://ctf.shesl.top" :logo="Logo"></nav-logo>
+    <nav-logo href="http://ctf.shesl.top" :logo="Logo"></nav-logo>
     <nav-item v-if="userInfo.isLogin" to="/search">Search</nav-item>
     <nav-item v-if="userInfo.isLogin" to="/profile" >Profile</nav-item>
 `</div>
