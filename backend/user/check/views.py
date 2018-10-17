@@ -87,7 +87,8 @@ class Username(View):
         }[self.code]
 
     def check(self):
-        self.result["length_out_range"] = len(self.username) not in range(6, 18)  # TODO: 检查用户名长度是否在 6-18 之间
+        # TODO: 检查用户名长度是否在 6-18 之间
+        self.result["length_out_range"] = len(self.username) not in range(6, 18)
         try:
             User.objects.get(username=self.username)
             self.result["user_exist"] = True
@@ -119,30 +120,37 @@ class TeamName(View):
         "team_exist": True,
         "is_reserved": True,
     }
-
-    def get_ret_dict(self):
-        return {
-            0: {"code": 0, "msg": "战队名合法"},
-            1: {"code": 1, "msg": "战队名不合法",
-                "error": " & ".join([v for k, v in self.error_msg.items() if self.result[k]])},
-            10: {"code": 10, "msg": "检测到攻击"},
-        }[self.code]
+    ret_dict = {
+        0: {"code": 0, "msg": "战队名合法"},
+        1: {"code": 1, "msg": "战队名不合法"},
+        2: {"code": 2, "msg": "参数错误"},
+        10: {"code": 10, "msg": "检测到攻击"},
+    }
 
     def check(self):
-        self.result["length_out_range"] = len(self.team_name) not in range(6, 18)  # TODO: 检查用户名长度是否在 6-18 之间
+        # TODO: 检查用户名长度是否在 6-18 之间
+        self.result["length_out_range"] = len(self.team_name) not in range(6, 18)
         try:
             Team.objects.get(team_name=self.team_name)
             self.result["team_exist"] = True
         except Team.DoesNotExist:
             self.result["team_exist"] = False
         self.result["is_reserved"] = self.team_name in self.banned_team_name
-        return 0 if ([v for v in self.result.values() if v] == []) else 1
+        if ([v for v in self.result.values() if v] != []):
+            self.ret_dict[1]["error"]= " & ".\
+                join([v for k, v in self.error_msg.items() if self.result[k]])
+            return 1
+        else: return 0
 
     def post(self, request):
         self.code = 10
-        return JsonResponseZh(self.get_ret_dict())
+        return JsonResponseZh(self.ret_dict[10])
 
     def get(self, request):
         self.team_name = request.GET.get("team_name")
-        self.code = self.check()
-        return JsonResponseZh(self.get_ret_dict())
+        if self.team_name is None:
+            self.ret_dict[2]["error"] = "请提供 team_name 参数"
+            self.code = 2
+        else:
+            self.code = self.check()
+        return JsonResponseZh(self.ret_dict[self.code])

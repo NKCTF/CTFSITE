@@ -70,6 +70,8 @@
 <div class="field">
   <label class="label"><slot></slot></label>
   <div class="control has-icons-left has-icons-right">
+    <!--<textarea v-if="area" class="textarea" :class="activeHelper" v-bind="reducedAttrs"-->
+              <!--v-model="model.value" @clur="$emit('blur')"></textarea>-->
     <input class="input" :class="activeHelper" v-bind="reducedAttrs" v-model="model.value" @blur="$emit('blur')">
     <span class="icon is-small is-left">
       <i class="fas" :class="icon"></i>

@@ -31,7 +31,7 @@ class UserScore(View):
     def query_user(self):
         # TODO: board 是一个 QuerySet 类型的数据，其类似于一个 list
         self.board = User.objects.all().order_by(F("score").desc()).\
-            values("username", "score", "qq", "user_career", "belong")
+            values("username", "score", "user_career", "belong")
         # TODO; key 即列表的键，value 即为一个 query 出来的字典
         self.data = [{k: ((Team.objects.get(id=v).team_name if v is not None else "HAVEN'T JOIN YET.")
                      # TODO: 将战队的 id 替换成为 name 指示战队名称
@@ -53,7 +53,8 @@ class UserScore(View):
 
 
 class TeamScore(View):
-    board = data = code = None
+    board = code = None
+    data = []
 
     def get_ret_dict(self):
         return {
@@ -65,6 +66,7 @@ class TeamScore(View):
         }[self.code]
 
     def query_team(self):
+        self.data = []
         # TODO: board 是一个 QuerySet 类型的数据，其类似于一个 list
         self.board = User.objects.values("belong").\
             annotate(score=Sum("score"), members=Count("belong")).\

@@ -33,7 +33,7 @@ class User(AbstractUser):
     belong = models.ForeignKey(Team, on_delete=models.SET_NULL,
                                related_name="work_for", null=True, blank=True)
     user_career = models.ForeignKey(Career, on_delete=models.SET_NULL, null=True, blank=True)
-    join_date = models.DateField(null=True, blank=True)
+    join_date = models.DateTimeField(null=True, blank=True)
     is_leader = models.BooleanField(default=False, null=True, blank=True)
 
     def create_team(self, team_name, team_description=None):

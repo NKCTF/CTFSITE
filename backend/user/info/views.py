@@ -52,43 +52,43 @@ class UserInformation(View):
 
 
 class TeamInformation(View):
-    code = data = crt_user = t_obj = None
-
-    def get_ret_dict(self):
-        return {
-            0: {"code": 0, "msg": "获取信息成功",
-                "data": self.data},
-            1: {"code": 1, "msg": "您尚未加入战队"},
-            10: {"code": 10, "msg": "检测到攻击"},
-            401: {"code": 401, "msg": "未授权用户"},
-        }[self.code]
+    code = crt_user = t_obj = None
+    data = {}
+    ret_dict = {
+        0: {"code": 0, "msg": "获取信息成功"},
+        1: {"code": 1, "msg": "您尚未加入战队"},
+        10: {"code": 10, "msg": "检测到攻击"},
+        401: {"code": 401, "msg": "未授权用户"},
+    }
 
     def get_team_msg(self):
         self.t_obj = self.crt_user.belong
-        if self.t_obj is None:
-            return 1
-        self.data = {
-            "team_name": self.t_obj.team_name,
-            "team_description": self.t_obj.description,
-            "my_role": getattr(self.crt_user.user_career, 'career_name', None),
-            "join_date": self.crt_user.join_date.strftime("%H:%M:%S in %Y,%m,%d")
-                        if self.crt_user.join_date is not None else None,
-            "is_leader": self.crt_user.is_leader,
-            # TODO: application -> JoinRequest 中所有目标为当前战队，发出用户的用户名
-            "application": [it.send_by.username for it in
-                            JoinRequest.objects.filter(send_to=self.t_obj)],
-        }
+        if self.t_obj is None: return 1
+        self.data["team_name"] = getattr(self.t_obj, "team_name", None)
+        self.data["team_description"] = getattr(self.t_obj, "team_description", None)
+        self.data["join_date"] = self.crt_user.join_date.strftime("%H:%M:%S in %Y,%m,%d") \
+            if self.crt_user.join_date is not None else None
+        self.data["is_leader"] = getattr(self.crt_user, "is_leader", None)
+
+        self.data["members"] = [it.username for it in User.objects.filter(belong=self.t_obj)]
+        reqeust_list = JoinRequest.objects.filter(send_to=self.t_obj).\
+            values("title", "content", "send_time", "send_by")
+        for it in reqeust_list:
+            it["send_by"] = User.objects.get(id=it["send_by"]).username
+            it["send_time"] = it["send_time"].strftime("%H:%M:%S in %Y,%m,%d")
+        self.data["application"] = list(reqeust_list)
+        self.ret_dict[0]["data"] = self.data
         return 0
 
     def get(self, request):
         if not request.user.is_authenticated:
             self.code = 401
-            return JsonResponseZh(self.get_ret_dict())
+            return JsonResponseZh(self.ret_dict[self.code])
         self.crt_user = request.user
         self.code = self.get_team_msg()
-        return JsonResponseZh(self.get_ret_dict())
+        return JsonResponseZh(self.ret_dict[self.code])
 
     def post(self, request):
         self.code = 10
-        return JsonResponseZh(self.get_ret_dict())
+        return JsonResponseZh(self.ret_dict[self.code])
 

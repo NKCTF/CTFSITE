@@ -34,7 +34,9 @@ const store = new Vuex.Store({
     user: {
       isLogin: false,
     },
-    team: {},
+    team: {
+      isJoin: false,
+    },
   },
   mutations: {
     updateUser(state, info) {
@@ -85,8 +87,10 @@ const app = new Vue({
         }),
         APIFetch('/user/info/team').then(data => {
           if (data.code === 0) {
+            data.data.isJoin = true;
             store.commit('updateTeam', data.data);
           }
+          console.log(data);
         })]);
     },
   },

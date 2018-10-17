@@ -3,10 +3,10 @@ from backend.user.models import User, Team
 from datetime import datetime  # 用于设置加入队伍的时间
 
 class AbstractMail(models.Model):
-    title = models.CharField(max_length=32)
-    content = models.CharField(max_length=256)
+    title = models.CharField(max_length=64)
+    content = models.CharField(max_length=512)
     is_read = models.BooleanField(default=False)
-    send_time = models.TimeField(auto_now_add=True, blank=True)
+    send_time = models.DateTimeField(auto_now_add=True, blank=True)
     send_to = models.ForeignKey(User, related_name="mail_send_to", on_delete=models.CASCADE)
     send_by = models.ForeignKey(User, related_name="mail_send_by", on_delete=models.CASCADE)
 
@@ -38,14 +38,14 @@ class JoinRequest(AbstractMail):
     def execute_apply(self, is_agree):
         """
         处理一个加入战队的申请
-        :param is_agree: 是否同意加入战队，同意为 True，拒绝为 False
+        :param is_agree: 是否同意加入战队，同意为 1，拒绝为 0
         """
         sender = self.send_by
         # TODO: 如果发送邮件的人已经加入一个战队了，引发一个错误
-        if sender.belong is not None:
+        if sender.belong is None:
             # TODO: 如果同意了，则将发送请求的人设置为已经加入了战队
-            if is_agree:
-                sender.belong = self
+            if is_agree == 1:
+                sender.belong = self.send_to
                 sender.join_date = datetime.now()
                 sender.save()
         else:
@@ -53,9 +53,9 @@ class JoinRequest(AbstractMail):
         # TODO: request_mail 已经读取并设置是否同意
         self.agree = is_agree
         self.is_read = True
-        self.save()
+        self.delete()
         # TODO: 返回发送一个告知是否同意的邮件
-        response_mail = Mail.objects.create(
+        response_mail = Mail(
             send_by=User.objects.get(is_leader=True, belong=self.send_to),  # send_by 本战队的队长
             send_to=sender,  # send_to request_mail 的发送人
         )

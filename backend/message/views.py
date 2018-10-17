@@ -3,8 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
 from .models import JoinRequest, Mail
-from backend.user.models import User
-
+from backend.user.models import User, Team
 
 def JsonResponseZh(json_data):
     """
@@ -41,7 +40,7 @@ class MailBox(View):
                     values("title", "content", "send_by", "send_time", "is_read", "agree")
             self.data = {
                 # TODO: 如果 value 是 send_by，读取出用户名
-                "normal_mail": [{k: (v.username if k == "send_by" else v)
+                "normal_mail": [{k: (User.objects.get(id=v).username if k == "send_by" else v)
                                  for k, v in item.items() } for item in self.normal_mail],
                 "join_request": [{k: (User.objects.get(id=v).username if k == "send_by" else v)
                                   for k, v in item.items() } for item in self.join_request],
@@ -62,3 +61,5 @@ class MailBox(View):
     def post(self, request):
         self.code = 10
         return JsonResponseZh(self.get_ret_code())
+
+

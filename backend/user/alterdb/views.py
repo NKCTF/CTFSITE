@@ -107,7 +107,7 @@ class AlterTeam(View):
         self.crt_user = request.user
         self.target_attr = request.POST.get("attribute")
         self.new_value = request.POST.get("value")
-        self.code = (self.set_user_msg() if self.crt_user.is_leader else 4)\
+        self.code = (self.set_team_msg() if self.crt_user.is_leader else 4)\
             if (self.target_attr is not None and self.new_value is not None) else 1
         return JsonResponseZh(self.get_ret_dict())
 

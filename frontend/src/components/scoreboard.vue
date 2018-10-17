@@ -73,6 +73,9 @@ export default {
 .scoreboard {
   justify-content: unset !important;
 }
+.scoreboard {
+  padding-bottom: 2rem;
+}
 </style>
 
 <template>
@@ -94,6 +97,8 @@ export default {
     <tr>
       <th>排名</th>
       <th>用户名</th>
+      <th>职业</th>
+      <th>归属战队</th>
       <th>分数</th>
     </tr>
     </thead>
@@ -101,6 +106,8 @@ export default {
     <tr v-for="(user, idx) in scoreboard">
       <td>{{idx + 1}}</td>
       <td>{{user.username}}</td>
+      <td>{{user.user_career}}</td>
+      <td>{{user.belong}}</td>
       <td>{{user.score}}</td>
     </tr>
     </tbody>
