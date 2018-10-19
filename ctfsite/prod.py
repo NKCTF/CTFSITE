@@ -11,7 +11,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/var/www/NKCTF/ctfsite/ctfsite_debug.log',
+            'filename': '/var/www/ctfsite/ctfsite_debug.log',
         },
     },
     'loggers': {
