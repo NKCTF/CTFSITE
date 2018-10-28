@@ -54,7 +54,6 @@ build/
 #*.xcworkspace
 #!default.xcworkspace
 xcuserdata
-profile
 *.moved-aside
 DerivedData
 .idea/
@@ -266,3 +265,5 @@ static/
 # magic files
 .editorconfig
 package-lock.json
+
+frontend/index.html
