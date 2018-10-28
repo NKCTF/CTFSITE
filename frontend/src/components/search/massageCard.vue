@@ -32,7 +32,6 @@
 </script>
 <!-- vue-loader's scoped css won't work with style-loader -->
 <style scoped lang="vcss">
-
 </style>
 
 <template>
@@ -49,12 +48,36 @@
       <div class="card-content">
         <div class="content">
           <article class="message is-dark">
-            <div class="message-body">
-              <span v-for="(item, key, index) in model.data">
-                <strong>{{key}}</strong>: {{item}}<br />
-              </span>
-            </div>
+            <div class="message-body"><strong>基本信息</strong></div>
           </article>
+          <table class="table is-fullwidth">
+            <thead>
+            <tr><td><strong>信息</strong></td><td><strong>内容</strong></td></tr>
+            </thead>
+            <tr v-for="(item, key, index) in model.data" v-if="key !== 'score_detail'">
+              <td><strong>{{ key }}</strong></td><td>{{ item }}</td>
+            </tr>
+          </table>
+
+          <article class="message is-dark">
+            <div class="message-body"><strong>解题信息</strong></div>
+          </article>
+          <table class="table is-fullwidth">
+            <thead>
+            <tr>
+              <td><strong>解题</strong></td>
+              <td><strong>该题排名</strong></td>
+              <td><strong>该题得分</strong></td>
+              <td><strong>解题时间</strong></td>
+            </tr>
+            </thead>
+            <tr v-for="slv in model.data.score_detail">
+              <td>{{ slv.solve_question }}</td>
+              <td>{{ slv.ranking }}</td>
+              <td>{{ slv.gain_score }}</td>
+              <td>{{ slv.solve_time }}</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

@@ -104,8 +104,7 @@ def refresh_board(request):
             score = 0
             sovle_list = Solve.objects.filter(who_solve=user)
             for sovle in sovle_list:
-                ranking = sovle.get_ranking()
-                score += sovle.which_question.get_score(rank=ranking)
+                score += sovle.get_score()
             user.score = score
         return JsonResponseZh({
             "code": 0,

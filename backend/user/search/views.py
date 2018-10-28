@@ -31,6 +31,7 @@ class SearchUser(View):
                 "username": self.target.username,
                 "email": self.target.email,
                 "score": self.target.score,
+                "score_detail": self.target.score_detail(),
                 "qq": self.target.qq,
                 "github": self.target.github,
                 "description": self.target.description,

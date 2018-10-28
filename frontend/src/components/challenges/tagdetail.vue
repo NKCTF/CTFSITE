@@ -15,11 +15,7 @@
           STATE_NONE,
       };
     },
-    beforeMount() {
-
-    },
     mounted() {
-      console.log(this.$route.params["tagname"]);
       this.fetch();
     },
     destroyed() {
@@ -80,13 +76,15 @@
       <tbody>
         <tr v-for="(question, index) in questionList">
           <td>{{ index+1 }}</td>
-          <router-link tag="td" :to="'question/' + question.question_id">
+          <router-link tag="td" :to="'/challenges/question/' + question.question_id" class="button">
             {{ question.question_name }}
           </router-link>
           <td>{{ question.init_score }}</td>
           <td>{{ question.current_score }}</td>
           <td>{{ question.solved_by }}</td>
-          <td>{{ question.first_solved }}</td>
+          <router-link tag="td" :to="'/challenges/solve/' + question.question_id" class="button">
+            {{ question.first_solved }}
+          </router-link>
         </tr>
       </tbody>
     </table>

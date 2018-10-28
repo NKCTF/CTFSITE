@@ -92,7 +92,7 @@
             <a :href="questionMsg.annex_link">{{questionMsg.annex_link===null ? "":"附件地址"}}</a>
           </div>
           <reg-input type="text" name="flag" :model.sync="flag" icon="fas fa-flag-checkered"
-            placeholder="FLAG" @blur="submitFlag()" showSuccess>
+            placeholder="FLAG" @blur="submitFlag()" @keyup.enter="submitFlag()" showSuccess>
           </reg-input>
         </div>
       </article>

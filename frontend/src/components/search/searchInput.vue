@@ -72,7 +72,7 @@
     <span class="icon is-small is-left" v-else>
       <i class="fas fa-question"></i>
     </span>
-    <input class="input is-rounded" :class="activeHelper" v-bind="reducedAttrs" v-model="model.value" @blur="$emit('blur')">
+    <input class="input is-rounded" :class="activeHelper" v-bind="reducedAttrs" v-model="model.value" @blur="$emit('blur')" @keyup.enter="$emit('blur')">
     <span class="icon is-small is-right" v-if="activeIcon" :key="activeIcon">
       <i :class="activeIcon" class="fas"></i>
     </span>

@@ -15,7 +15,7 @@
 ### Structure / 项目结构
 
 + 项目入口点是 package.json，里的 scripts 项对应 `npm run build` 和 `npm run dev` 指令
-+ webpack 会从 webpack.config.js 读取配置文件并打包应用
++ webpack 会从 webpack.common.js 读取配置文件并打包应用
 + 代码在 `src/`，入口点是 index.js，路由在其中定义
 + 组件模板在 `src/template.vue`，创建新组件时将其复制一份，放在 `src/components` (代码中用 **@c/** 指代），并将 `export default` 里的 `name` 改成唯一的就可以愉快的使用了。
 + 建议 `@c`  中只放置路由或弹窗，具体组件放置在对应文件夹中，参考 `@c/navbar.vue`

@@ -2,8 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const BabelPluginProposalObjectRestSpread = require('@babel/plugin-proposal-object-rest-spread');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const BabelPluginProposalObjectRestSpread = require('@babel/plugin-proposal-object-rest-spread');
 
 const distPath = path.resolve(__dirname, './static');
 

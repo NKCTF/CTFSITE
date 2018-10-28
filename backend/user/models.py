@@ -51,3 +51,17 @@ class User(AbstractUser):
         self.join_date = datetime.now()
         self.save()
         return new_team
+
+    def score_detail(self):
+        from backend.question.models import Solve
+        solve_q = Solve.objects.filter(who_solve=self)
+        ret = []
+        for slv in solve_q:
+            data = {
+                "solve_question": slv.which_question.question_name,
+                "ranking": slv.get_ranking(),
+                "gain_score": slv.get_score(),
+                "solve_time": slv.time.strftime("%H:%M:%S in %Y,%m,%d"),
+            }
+            ret.append(data)
+        return ret

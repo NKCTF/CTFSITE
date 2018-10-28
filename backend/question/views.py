@@ -136,3 +136,53 @@ class CheckFlag(View):
 
     def get(self, request):
         return JsonResponseZh(self.ret_dict[10])
+
+
+class SolveMessage(View):
+    """
+    GET 方式请求传入一个 question_name，返回一个按照分数排序的解答人数列表
+    """
+    q_id = None
+    ret = {
+        0: {"code": 0, "msg": "请求成功"},
+        1: {"code": 1, "msg": "参数错误"},
+        401: {"code": 401, "msg": "未授权用户"},
+        500: {"code": 500, "msg": "内部错误"},
+    }
+    def query_solver(self):
+        try:
+            q_obj = Question.objects.get(id=self.q_id)
+        except Question.DoesNotExist:
+            self.ret[1]["error"] = "请求题目不存在"
+            return 1
+        except ValueError:
+            self.ret[1]["error"] = "请请求一个整数型 id"
+            return 1
+        try:
+            solv_list = Solve.objects.filter(which_question=q_obj).order_by("time")
+            from backend.scoreboard.refresh.apps import refresh
+            self.ret[0]["data"] = []
+            for solv in solv_list:
+                refresh(user=solv.who_solve)
+                data = {
+                    "username": solv.who_solve.username,
+                    "gain_score": solv.get_score(),
+                    "total_score": solv.who_solve.score,
+                    "solve_time": solv.time.strftime("%H:%M:%S in %Y,%m,%d"),
+                }
+                self.ret[0]["data"].append(data)
+            return 0
+        except Exception as e:
+            self.ret[500]["error"] = str(e)
+            return 500
+
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return JsonResponseZh(self.ret[401])
+        self.q_id = request.GET.get("question_id")
+        if self.q_id is None:
+            self.code = 1
+            self.ret[1]["error"] = "请提供 question_id 参数"
+        else:
+            self.code = self.query_solver()
+        return JsonResponseZh(self.ret[self.code])

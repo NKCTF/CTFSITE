@@ -94,9 +94,9 @@ export default {
     </article>
     <form :class="{'is-loading': form.pending}">
       <reg-input name="username" :model.sync="username" icon="fa-user"
-                 placeholder="User Name" @blur="updateUsername">Username</reg-input>
+                 placeholder="User Name" @blur="updateUsername" @keyup.enter="updateUsername">Username</reg-input>
       <reg-input type="password" name="password" :model.sync="password" icon="fa-key"
-                 placeholder="Password" @blur="updatePassword">Password</reg-input>
+                 placeholder="Password" @blur="updatePassword" @keyup.enter="updatePassword">Password</reg-input>
       <a class="button is-success is-pulled-right" @click="trySignIn">
         <span>登录</span>
         <span class="icon">

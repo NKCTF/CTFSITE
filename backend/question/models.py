@@ -52,6 +52,9 @@ class Question(models.Model):
         curscore = ( (p ** (k-1))*(1 - p)/(1 - p ** n) )*self.init_score
         return int(curscore)
 
+    def __str__(self):
+        return self.question_name + " of " + self.question_tag.tag_name
+
 
 class Solve(models.Model):
     who_solve = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -62,6 +65,9 @@ class Solve(models.Model):
         ranking = Solve.objects.filter(which_question=self.which_question,
                                        time__lte=self.time).count()
         return ranking
+
+    def get_score(self):
+        return self.which_question.get_score(rank=self.get_ranking())
 
     def save(self, *args, **kwargs):
         user = self.who_solve
@@ -77,3 +83,6 @@ class Solve(models.Model):
 
     class Meta:
         unique_together = ["who_solve", "which_question"]
+
+    def __str__(self):
+        return self.who_solve.username + " solves " + self.which_question.question_name

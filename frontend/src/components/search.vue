@@ -71,6 +71,9 @@ export default {
 .search {
   justify-content: unset!important;
 }
+.search {
+  padding-bottom: 2rem;
+}
 </style>
 
 <template>
