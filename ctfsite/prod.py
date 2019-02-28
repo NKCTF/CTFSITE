@@ -1,5 +1,6 @@
 # 导入公共配置
 from .settings import *
+from os.path import realpath, join, dirname
 
 # 生产环境关闭DEBUG模式
 DEBUG = False
@@ -11,7 +12,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/var/www/ctfsite/ctfsite_debug.log',
+            'filename': join(dirname(realpath(__file__)), "../ctfsite-debug.log"),
         },
     },
     'loggers': {
