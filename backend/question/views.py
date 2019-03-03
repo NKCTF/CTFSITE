@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
+import datetime
 from .models import Question, Solve
 
 
@@ -102,6 +103,7 @@ class CheckFlag(View):
         3: {"code": 1, "msg": "参数错误", "error": "请提交 flag"},
         4: {"code": 1, "msg": "参数错误", "error": "请求题目不存在"},
         5: {"code": 1, "msg": "参数错误", "error": "您已经解答过该题目"},
+        6: {"code": 1, "msg": "参数错误", "error": "超过答题的时间"},
         10: {"code": 10, "msg": "检测到攻击"},
         401: {"code": 401, "msg": "未授权用户"},
     }
@@ -111,6 +113,8 @@ class CheckFlag(View):
             self.q_obj = Question.objects.get(id=self.q_id)
         except Question.DoesNotExist:
             return 4
+        if datetime.datetime.now() > self.q_obj.deadline:
+            return 6
         try:
             Solve.objects.get(who_solve=self.crt_user, which_question=self.q_obj)
             return 5

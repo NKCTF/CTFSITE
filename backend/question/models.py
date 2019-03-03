@@ -20,6 +20,7 @@ class Question(models.Model):
     question_name = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=256)
     link = models.CharField(max_length=256, null=True, blank=True)
+    deadline = models.DateTimeField(null=True, blank=True)
 
     init_score = models.IntegerField(default=200)
     # TODO: arg_p 是一个控制分数计算的概率参数
