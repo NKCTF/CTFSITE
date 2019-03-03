@@ -28,7 +28,7 @@ SECRET_KEY = '3$ldc(=kjtp%6su#c56wu%4#wo4e%xfsb&q$m_7mc4h6vtxm5c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.137.144.24', 'ctf.shesl.top','localhost', 'nkctf.cf']
+ALLOWED_HOSTS = ['10.134.55.212', 'localhost', 'nkctf.com']
 
 
 # Application definition

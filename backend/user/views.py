@@ -52,7 +52,7 @@ class Login(View):
 
 @method_decorator(csrf_exempt, name="dispatch")
 class AuthLogin(View):
-    client_id = "b7bc968987af28497e2d"
+    client_id = "70e981bf5cf61e2d59ac"
     # TODO: 此处 secret_key 不应该放在发行版开源
     client_secret = environ_var.get("github_client_secret")
     token_host = {
@@ -188,7 +188,7 @@ def user_auth_in(request):
     # TODO: generate a state
     state = 'safe_string'
     location_host = 'https://github.com/login/oauth/authorize'
-    client_id = 'b7bc968987af28497e2d'
+    client_id = '70e981bf5cf61e2d59ac'
     return HttpResponse(
         f"<script>"
         f"const url = new URL('auth_back', "
