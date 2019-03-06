@@ -28,7 +28,7 @@ class Question(models.Model):
     # TODO: arg_p 越小，分数极差越大，第一个解出题目的人最终得分越高
     arg_p = models.FloatField(default=0.6)
     solve_by = models.ManyToManyField(User, through="Solve")
-    flag = models.CharField(max_length=128)
+    flag = models.CharField(max_length=512)
 
     def set_flag(self, text_flag):
         self.flag = text_flag
