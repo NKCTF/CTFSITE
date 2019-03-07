@@ -26,7 +26,10 @@ class Question(models.Model):
     # TODO: arg_p 是一个控制分数计算的概率参数
     # TODO: arg_p 属于 [0,1]，默认值是 0.6
     # TODO: arg_p 越小，分数极差越大，第一个解出题目的人最终得分越高
-    arg_p = models.FloatField(default=0.6)
+    arg_p = models.FloatField(
+        default=0.85,
+        help_text=u"p 表示，当题目被第二个人做出时， 第一名分数下降到的高度。默认值 0.85"
+    )
     solve_by = models.ManyToManyField(User, through="Solve")
     flag = models.CharField(max_length=512)
 
@@ -37,20 +40,13 @@ class Question(models.Model):
         return self.flag == text_flag
 
     def get_score(self, rank=None):
-        """
-        $$ Score_{k} = \frac{p^k}{\sum_{i=1}^{n} p^i} * total $$
-        """
         n = self.solve_by.count()
-        if rank is None:
-            # TODO: 如果没有传入 Rank, 则返回结果表示
-            # TODO: 当下一个 Solve 插入时，它可能得到的分数是多少
-            n += 1
-            k = n
-        else:
-            # TODO: 如果传入了 Rank 进行计算则使用，第 k 个解出的人实际得分
-            k = rank
         p = self.arg_p
-        curscore = ( (p ** (k-1))*(1 - p)/(1 - p ** n) )*self.init_score
+        from math import log
+        c = -log(1+p, p)
+        n = (n+1) if rank is None else n
+        k = n if rank is None else rank
+        curscore = ( ((p ** (k-1)) * (1 - p**c))/(1 - p ** (c + n - 1)) )*self.init_score
         return int(curscore)
 
     def __str__(self):
