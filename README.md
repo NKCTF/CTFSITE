@@ -1,6 +1,22 @@
 # ctfsite
 为南开 CTF 开发的 Web 项目。
 
+## 技术细节
+
+- 前端通过 webpack 打包，vue-router 管理前端路由，主要通过 vue.js 框架实现一个前端业务，在本项目中存储在 `frontend/` 文件夹中
+
+- 后端通过 Django 连接 mysql 数据库，实现了登录注册（其中包括 Github 第三方登录）、提交 flag、战队信息等功能。除 Django 自带数据表外，一共设计了大约 7-8 张数据表。
+
+- 服务器配置，通过 python 的 `virtualenv` 配置 python 的 python3.6 环境，`uwsgi` 链接 `nginx` 实现生产环境的部署
+
+## DEMO
+
+- 项目地址：即[本项目](https://github.com/NKCTF/ctfsite)
+
+- 网页展示地址：配置在了南开大学校内的服务器上，需要校园网访问[以下网址](http://nkctf.com)
+
+- 网页的展示视频：[bilibili](https://www.bilibili.com/video/av44710693)
+
 ## 生产环境配置说明
 
 以下均针对 Ubuntu 生产环境配置。
@@ -202,39 +218,3 @@ $ python manage.py runserver 0:80
 ```
 
 其中，`0 ` 表示可以通过任意 `ip` 访问该服务器，`80` 表示开放在服务器的 `80` 端口。
-
-## Django
-
-简单介绍关于 Django。
-
-- 使用命令 `django-admin startproject mysite` 可以初始化一个 Django 项目。
-
-- Django 提供了一个集成了许多管理功能的 Python 脚本 &rarr; **manage.py**
-
-- 一个 Django 项目由许多应用组成，这些应用为 Python 的模块的文件夹，与 manage.py 一起置于根文件夹下，使用 `python manage.py startapp polls` 命令可以初始化创建一个 Django 应用。
-- 在应用的文件夹内，一般有以下文件：
-  - `models.py`：这个文件表明的数据库的设计方式，内部的一个 Python 类对应着一个数据库中的表单。
-  - `admin.py`：这个文件中表明了以管理员方式登录网站时，可以操作的内容。
-
-## ctfsite
-
-Django 项目全部在该文件夹内，以下是关于该项目内容的一些解释：
-
-### `User`
-
-有关用户信息的数据。登录界面、用户信息界面的视图。
-
-下表为 User 这个应用的数据库设计：
-
-| 表名 | 属性                                                         |
-| ---- | ------------------------------------------------------------ |
-| User | id &rarr; int, not null, primary key, autoincrement<br />name &rarr; char(32), not null, unique<br />qq &rarr; char(16), null<br />description &rarr; char(128), not null<br />Email &rarr; char(32), null<br />belongTo_id &rarr; int, null, references "user_team" ("id") deferrable initially deferred; |
-| Team | id &rarr; int, not null, primary key, autoincrement<br />name &rarr; char(32), not null, unique<br />description &rarr; char(128), not null |
-
-### `question`
-
-与题目相关的数据。题目相关界面的视图。
-
-### `Post`
-
-与公告相关的数据。公告展示、编辑公告的视图。
